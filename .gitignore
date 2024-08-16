@@ -1,5 +1,8 @@
-# Logs
-logs
+# Ignore vendor directory
+/vendor/
+
+# Ignore logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,24 +10,21 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-.DS_Store
-dist
-dist-ssr
-coverage
+# Ignore node modules and build artifacts
+node_modules/
+dist/
+
+# Ignore local environment files
 *.local
+.env
 
-/cypress/videos/
-/cypress/screenshots/
 
-# Editor directories and files
+# Ignore editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-
-*.tsbuildinfo

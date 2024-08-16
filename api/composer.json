@@ -1,0 +1,20 @@
+{
+    "name": "giorgi/scandiweb-test",
+    "description": "Scandiweb junior developer test assignment",
+    "type": "project",
+    "require": {
+      "php": "^8.3"
+    },
+    "autoload": {
+      "psr-4": {
+        "App\\": "app/"
+      }
+    },
+    "authors": [
+      {
+       "name": "Giorgi Surmanidze",
+       "email": "giorgisurmanidze917@gmail.com"
+      }
+    ],
+    "minimum-stability": "stable"
+  }

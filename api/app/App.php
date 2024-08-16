@@ -9,6 +9,7 @@ ini_set('display_errors', 1); // Should be set to 0 in production
 use App\Controllers\ProductController;
 use App\Models\Products;
 use Bramus\Router\Router;
+use Dotenv\Dotenv;
 
 class App
 {
@@ -24,8 +25,15 @@ class App
         $router->run();
     }
 
+    private static function loadEnvVariables()
+    {
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__));
+        $dotenv->safeLoad();
+    }
+
     public static function run()
     {
         self::setRoutes();
+        self::loadEnvVariables();
     }
 }

@@ -15,7 +15,7 @@ class ProductHelper
         return $data;
     }
 
-    public static function validateProductData(array $data, string $type):void
+    public static function validateProductData(array $data, string $type): void
     {
         Validator::validateProductFields($data, $type);
         Validator::validatePositiveNumber('price', $data['price']);
@@ -28,5 +28,21 @@ class ProductHelper
             return new $className(...array_values($data));
         }
         return null;
+    }
+
+    public static function insertProduct($dbConn, array $productData): void
+    {
+        $query = "INSERT INTO products (sku, name, price, type) VALUES (:sku, :name, :price, :type)";
+        $stmt = $dbConn->prepare($query);
+        $stmt->execute($productData);
+    }
+
+    public static function insertIntoDynamicTable($dbConn, string $dbTable, array $filteredData): void
+    {
+        $columns = implode(", ", array_keys($filteredData));
+        $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($filteredData)));
+        $sql = "INSERT INTO $dbTable ($columns) VALUES ($placeholders)";
+        $stmt = $dbConn->prepare($sql);
+        $stmt->execute($filteredData);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Database\Db;
 use App\Utils\HttpResponse;
+use App\Utils\ProductHelper;
 
 trait ProductTrait
 {
@@ -14,21 +15,16 @@ trait ProductTrait
         $keysToExclude = ['name', 'price', 'type'];
         $productKeys = ['sku', 'name', 'price', 'type'];
 
+        // removes unwanted keys
         $specificTableData = array_diff_key($data, array_flip($keysToExclude));
+        //  Extracts the required keys
         $productData = array_intersect_key($data, array_flip($productKeys));
 
         try {
             $dbConn = Db::getConnection();
 
-            $query = "INSERT INTO products (sku, name,price,type)  VALUES (:sku, :name, :price, :type)";
-            $stmt = $dbConn->prepare($query);
-            $stmt->execute($productData);
-
-            $columns = implode(", ", array_keys($specificTableData));
-            $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($specificTableData)));
-            $sql = "INSERT INTO $dbTable ($columns) VALUES ($placeholders)";
-            $stmt = $dbConn->prepare($sql);
-            $stmt->execute($specificTableData);
+            ProductHelper::insertProduct($dbConn, $productData);
+            ProductHelper::insertIntoDynamicTable($dbConn, $dbTable, $specificTableData);
 
             HttpResponse::added();
         } catch (\Exception $e) {

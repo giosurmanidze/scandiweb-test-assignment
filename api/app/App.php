@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1); // Should be set to 0 in production
 
@@ -33,7 +32,7 @@ class App
 
     public static function run()
     {
-        self::setRoutes();
         self::loadEnvVariables();
+        self::setRoutes();
     }
 }

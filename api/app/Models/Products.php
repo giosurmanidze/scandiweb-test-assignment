@@ -15,7 +15,7 @@ class Products
                 echo "Invalid product type";
             }
 
-            print_r($product);
+           $product->save();
 
 
         } catch (\Exception $e) {

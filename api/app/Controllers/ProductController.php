@@ -8,9 +8,9 @@ class ProductController
 {
     private Products $products;
 
-    public function __construct()
+    public function __construct(Products $products)
     {
-        $this->products = new Products();
+        $this->products = $products;
     }
 
     public function createProduct(): void

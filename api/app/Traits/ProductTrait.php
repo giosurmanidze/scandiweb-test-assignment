@@ -3,10 +3,11 @@
 namespace App\Traits;
 
 use App\Database\Db;
+use App\Utils\HttpResponse;
 
 trait ProductTrait
 {
-    public function save(): void 
+    public function save(): void
     {
         $data = $this->getData();
         $dbTable = $data['type'];
@@ -29,15 +30,14 @@ trait ProductTrait
             $stmt = $dbConn->prepare($sql);
             $stmt->execute($specificTableData);
 
-        }catch(\Exception $e) 
-        {
-            echo $e->getMessage();
+            HttpResponse::added();
+        } catch (\Exception $e) {
+            HttpResponse::dbError($e->getMessage());
         }
     }
 
-    public static function getAll(string $dbTable): ?array 
+    public static function getAll(string $dbTable): ?array
     {
         return [];
     }
-  
 }

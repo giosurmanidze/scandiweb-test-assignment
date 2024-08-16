@@ -2,24 +2,29 @@
 
 namespace App\Models;
 
+use App\Utils\HttpResponse;
+use App\Utils\ProductHelper;
+
 class Products
 {
     public function add(array $data): void
     {
         try {
+            $type = strtolower($data['type'] ?? '');
 
-            $className = "App\\Models\\" . ucfirst($data['type']);
-            $product = new $className(...array_values($data));
+            ProductHelper::validateProductData($data, $type);
+            $data = ProductHelper::convertFloatFields($data, $type);
 
-            if($product === null) {
-                echo "Invalid product type";
+            $product = ProductHelper::createProductInstance($data);
+            if ($product === null) {
+                HttpResponse::validationError('Invalid product type');
+                return;
             }
-
-           $product->save();
-
-
+            $product->save();
+        } catch (\InvalidArgumentException $e) {
+            HttpResponse::validationError($e->getMessage());
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            HttpResponse::dbError($e->getMessage());
         }
     }
 }

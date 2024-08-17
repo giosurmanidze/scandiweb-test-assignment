@@ -22,12 +22,16 @@ trait ProductTrait
 
         try {
             $dbConn = Db::getConnection();
+            $dbConn->beginTransaction();
 
             ProductHelper::insertProduct($dbConn, $productData);
             ProductHelper::insertIntoDynamicTable($dbConn, $dbTable, $specificTableData);
 
+            $dbConn->commit();
             HttpResponse::added();
         } catch (\Exception $e) {
+             // Rollback transaction on error
+             $dbConn->rollBack();
             HttpResponse::dbError($e->getMessage());
         }
     }

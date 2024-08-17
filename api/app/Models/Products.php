@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Utils\HttpResponse;
 use App\Utils\ProductHelper;
+use App\Utils\ProductType;
 
 class Products
 {
@@ -23,6 +24,22 @@ class Products
             $product->save();
         } catch (\InvalidArgumentException $e) {
             HttpResponse::validationError($e->getMessage());
+        } catch (\Exception $e) {
+            HttpResponse::dbError($e->getMessage());
+        }
+    }
+
+    public function get(): void
+    {
+        try {
+            $dvds = Dvd::getAll(ProductType::DVD->value);
+            $books = Book::getAll(ProductType::BOOK->value);
+            $furnitures = Furniture::getAll(ProductType::FURNITURE->value);
+
+            $allProducts = array_merge($dvds, $books, $furnitures);
+
+            http_response_code(200);
+            echo json_encode($allProducts);
         } catch (\Exception $e) {
             HttpResponse::dbError($e->getMessage());
         }

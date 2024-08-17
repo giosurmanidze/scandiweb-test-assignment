@@ -13,10 +13,14 @@ class ProductController
         $this->products = $products;
     }
 
+    public function getProducts(): void
+    {
+        $this->products->get();
+    }
+
     public function createProduct(): void
     {
         $product = $_POST;
         $this->products->add($product);
     }
-
 }

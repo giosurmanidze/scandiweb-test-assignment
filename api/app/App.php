@@ -19,6 +19,7 @@ class App
         $productModel = new Products();
         $productController = new ProductController($productModel);
 
+        $router->get('/products', [$productController, 'getProducts']);
         $router->post('/create-product', [$productController, 'createProduct']);
 
         $router->run();

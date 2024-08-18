@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Database\Db;
 use App\Utils\HttpResponse;
 use App\Utils\ProductHelper;
 use App\Utils\ProductType;
+use App\Utils\Validator;
 
 class Products
 {
@@ -40,6 +42,26 @@ class Products
 
             http_response_code(200);
             echo json_encode($allProducts);
+        } catch (\Exception $e) {
+            HttpResponse::dbError($e->getMessage());
+        }
+    }
+
+    public function delete(array $skus): void
+    {
+        try {
+            $dbConn = Db::getConnection();
+
+            Validator::validateArrayOfSkus($skus);
+
+            $placeholders = implode(',', array_fill(0, count($skus), '?'));
+            $sql = "DELETE FROM products WHERE sku IN ($placeholders)";
+            $stmt = $dbConn->prepare($sql);
+            $stmt->execute($skus);
+
+            HttpResponse::deleted();
+        } catch (\InvalidArgumentException $e) {
+            HttpResponse::validationError($e->getMessage());
         } catch (\Exception $e) {
             HttpResponse::dbError($e->getMessage());
         }

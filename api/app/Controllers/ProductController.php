@@ -23,4 +23,10 @@ class ProductController
         $product = $_POST;
         $this->products->add($product);
     }
+
+    public function deleteProducts(): void
+    {
+        $skus = $_POST;
+        $this->products->delete($skus);
+    }
 }

@@ -15,6 +15,10 @@ class HttpResponse
     {
         self::sendResponse(201, ['message' => 'Product added successfully.']);
     }
+    public static function deleted(): void
+    {
+        self::sendResponse(200, ['message' => 'Products deleted successfully.']);
+    }
 
     public static function dbError(string $message): void
     {

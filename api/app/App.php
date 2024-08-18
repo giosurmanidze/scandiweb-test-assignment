@@ -21,6 +21,7 @@ class App
 
         $router->get('/products', [$productController, 'getProducts']);
         $router->post('/create-product', [$productController, 'createProduct']);
+        $router->post('/mass-delete', [$productController, 'deleteProducts']);
 
         $router->run();
     }

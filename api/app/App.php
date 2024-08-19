@@ -7,6 +7,7 @@ ini_set('display_errors', 1); // Should be set to 0 in production
 
 use App\Controllers\ProductController;
 use App\Models\Products;
+use App\Utils\Headers;
 use Bramus\Router\Router;
 use Dotenv\Dotenv;
 
@@ -34,6 +35,7 @@ class App
 
     public static function run()
     {
+        Headers::set();
         self::loadEnvVariables();
         self::setRoutes();
     }

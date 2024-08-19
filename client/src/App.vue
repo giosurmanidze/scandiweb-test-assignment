@@ -1,7 +1,7 @@
-<script setup></script>
+<script setup>
+import MainLayout from "./components/MainLayout.vue";
+</script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">
-    Hello there!
-  </h1>
+  <MainLayout />
 </template>

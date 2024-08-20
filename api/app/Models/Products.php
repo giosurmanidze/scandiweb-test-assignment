@@ -13,7 +13,7 @@ class Products
     public function add(array $data): void
     {
         try {
-            $type = strtolower($data['type'] ?? '');
+            $type = strtolower($data['type']);
 
             ProductHelper::validateProductData($data, $type);
             $data = ProductHelper::convertFloatFields($data, $type);

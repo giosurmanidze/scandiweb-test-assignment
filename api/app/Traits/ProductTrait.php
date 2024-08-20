@@ -15,16 +15,23 @@ trait ProductTrait
         $keysToExclude = ['name', 'price', 'type'];
         $productKeys = ['sku', 'name', 'price', 'type'];
 
-        // removes unwanted keys
-        $specificTableData = array_diff_key($data, array_flip($keysToExclude));
-        //  Extracts the required keys
-        $productData = array_intersect_key($data, array_flip($productKeys));
+        $specificTableData = [];
+        $productsTableData = [];
+
+        foreach ($data as $key => $value) {
+            if (in_array($key, $productKeys)) {
+                $productsTableData[$key] = $value;
+            }
+            if (!in_array($key, $keysToExclude)) {
+                $specificTableData[$key] = $value;
+            }
+        }
 
         try {
             $dbConn = Db::getConnection();
             $dbConn->beginTransaction();
 
-            ProductHelper::insertProduct($dbConn, $productData);
+            ProductHelper::insertProduct($dbConn, $productsTableData);
             ProductHelper::insertIntoDynamicTable($dbConn, $dbTable, $specificTableData);
 
             $dbConn->commit();

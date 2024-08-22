@@ -16,7 +16,7 @@ class Validator
         }
     }
 
-    public static function validatePositiveNumber(string $key, $value): void
+    public static function validatePositiveNumber(string $key, float $value): void
     {
         if (!is_numeric($value) || $value <= 0) {
             throw new InvalidArgumentException("$key must be a positive number.");

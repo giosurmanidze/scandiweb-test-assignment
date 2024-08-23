@@ -6,11 +6,11 @@
       </h2>
       <div>
         <div class="flex justify-center sm:gap-2 md:gap-6" v-if="routeName === 'ProductListPage'">
-          <NavButton page-name="ProductListPage" btn-content="Add" />
-          <SubmitButton btn-content="Mass Delete" @click="props.onSubmit" />
+          <NavButton page-name="AddProductPage" btn-content="Add" />
+          <SubmitButton btn-content="Mass Delete" @click="handleSubmit" />
         </div>
         <div v-else class="flex justify-center sm:gap-2 md:gap-6">
-          <SubmitButton btn-content="Save" @click="props.onSubmit" />
+          <SubmitButton btn-content="Save" @click="handleSubmit" />
           <NavButton page-name="ProductListPage" btn-content="Cancel" />
         </div>
       </div>
@@ -30,4 +30,10 @@ const routeName = computed(() => route.name)
 const props = defineProps({
   onSubmit: Function
 })
+
+const handleSubmit = () => {
+  if (props.onSubmit) {
+    props.onSubmit()
+  }
+}
 </script>

@@ -17,9 +17,9 @@
     <h3 class="text-gray-600 text-sm">{{ product.price }} $</h3>
     <h3 class="text-gray-600 text-sm">
       {{
-        product.type === 'books'
+        product.type === 'book'
           ? `Weight: ${product.weight}`
-          : product.type === 'dvds'
+          : product.type === 'dvd'
             ? `Size: ${product.size} MB`
             : `Dimension: ${product.height}x${product.width}x${product.length}`
       }}

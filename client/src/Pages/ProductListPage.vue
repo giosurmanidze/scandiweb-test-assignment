@@ -4,7 +4,7 @@
     <div
       v-for="(product, index) in products"
       :key="index"
-      class="bg-white p-6 rounded-lg shadow-md w-72 border-black border-2"
+      class="bg-white p-10 rounded-lg shadow-md w-80 border-black border-2"
       v-if="products.length"
     >
       <ProductCard

@@ -18,12 +18,12 @@ const validateForm = (errors, form) => {
         isValid = false;
     }
 
-    if (form.value.type === 'books' && (!form.value.weight || isNaN(Number(form.value.weight)))) {
+    if (form.value.type === 'book' && (!form.value.weight || isNaN(Number(form.value.weight)))) {
         errors.value.weight = true;
         isValid = false;
     }
 
-    if (form.value.type === 'dvds' && (!form.value.size || isNaN(Number(form.value.size)))) {
+    if (form.value.type === 'dvd' && (!form.value.size || isNaN(Number(form.value.size)))) {
         errors.value.size = true;
         isValid = false;
     }

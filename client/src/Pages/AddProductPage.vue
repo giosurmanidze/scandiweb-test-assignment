@@ -2,7 +2,7 @@
   <Header ref="headerRef" :form="form" :onSubmit="handleSave" />
   <div class="flex w-full flex-col items-center justify-start h-screen mt-16 px-4 md:px-8 lg:px-16">
     <form @submit.prevent="handleSave" id="product_form" class="w-full max-w-lg">
-      <p class="text-red-900 text-md">
+      <p class="text-red-800 text-md">
         All fields are required!
         <span v-if="errors.duplicate_sku_error">
           {{ notify() }}

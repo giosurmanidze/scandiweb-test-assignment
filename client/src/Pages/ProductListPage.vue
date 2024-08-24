@@ -14,7 +14,7 @@
         @update:checkboxValues="updateCheckboxValues"
       />
     </div>
-    <h2 v-else class="sm:text-xl md:text-3xl flex gap-3 items-center">
+    <h2 v-else class="sm:text-xl md:text-3xl flex gap-3 items-center font-heading_font">
       No Products Found <img src="@/assets/empty_box.png" alt="empty box" width="70" height="70" />
     </h2>
   </div>

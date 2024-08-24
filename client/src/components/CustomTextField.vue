@@ -11,7 +11,7 @@
         :value="modelValue"
         @input="handleInput"
         class="mt-1 block py-2 px-3 w-full md:w-3/4 border-2 border-black rounded-md"
-        :class="error ? 'border-2 border-red-700' : ''"
+        :class="error ? 'border-2 border-scandiweb_red' : ''"
       />
     </div>
   </div>

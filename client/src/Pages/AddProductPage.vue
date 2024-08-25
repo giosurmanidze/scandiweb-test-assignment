@@ -36,8 +36,19 @@
           :error="errors.price"
         />
       </div>
-      <div class="flex items-center mt-5 w-full">
+      <div class="flex flex-col flex-end  mt-5 w-full">
         <SelectMenu v-model="form.type" id="productType" />
+        <div class="w-full md:w-3/4 text-red-800">
+          {{
+            form.type === 'book'
+              ? 'Please, provide size'
+              : form.type === 'dvd'
+                ? 'Please, provide weight'
+                : form.type === 'furniture'
+                  ? 'Please, provide dimensions in HxWxL format'
+                  : ''
+          }}
+        </div>
       </div>
 
       <!-- Conditional Input Fields -->

@@ -1,11 +1,11 @@
 <template>
-  <Header :onSubmit="handleMassDelete" />
+  <Header :onSubmit="handleMassDelete" pageTitle="Product List"/>
   <div class="w-full px-10 flex gap-10 flex-wrap my-16 justify-center">
     <div
       v-for="(product, index) in products"
       :key="index"
       class="bg-white p-10 rounded-lg shadow-md w-80 border-black border-2"
-      v-if="products.length"
+      v-if="products.length "
     >
       <ProductCard
         :product="product"

@@ -1,5 +1,5 @@
 <template>
-  <Header ref="headerRef" :form="form" :onSubmit="handleSave" />
+  <Header :onSubmit="handleSave" pageTitle="Product Add" />
   <div class="flex w-full flex-col items-center justify-start h-screen mt-16 px-4 md:px-8 lg:px-16">
     <form @submit.prevent="handleSave" id="product_form" class="w-full max-w-lg">
       <p class="text-red-800 text-md">
@@ -36,7 +36,7 @@
           :error="errors.price"
         />
       </div>
-      <div class="flex flex-col flex-end  mt-5 w-full">
+      <div class="flex flex-col flex-end mt-5 w-full">
         <SelectMenu v-model="form.type" id="productType" />
         <div class="w-full md:w-3/4 text-red-800">
           {{
@@ -155,7 +155,6 @@ watch(
     if (newVal) notify()
   }
 )
-
 const handleSave = async () => {
   if (!validatedForm(errors, form)) {
     return
@@ -165,11 +164,10 @@ const handleSave = async () => {
   )
 
   try {
-    console.log(filteredData)
     const response = await axios.post('/create-product', filteredData)
-    router.push('/')
+    await router.push({ name: 'ProductListPage' })
   } catch (error) {
-    console.error(error)
+    console.error('Error during save:', error)
     const errorData = error.response?.data?.error
     if (errorData?.startsWith('SQLSTATE[23000]')) {
       errors.value.duplicate_sku_error = true
@@ -177,4 +175,5 @@ const handleSave = async () => {
     }
   }
 }
+
 </script>

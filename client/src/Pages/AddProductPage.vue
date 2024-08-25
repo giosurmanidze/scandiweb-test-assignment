@@ -7,12 +7,16 @@
         <span v-if="errors.duplicate_sku_error">
           {{ notify() }}
         </span>
+        <span v-if="errors.type_error">
+          {{ typeErrorNotify() }}
+        </span>
       </p>
 
       <div class="mb-4">
         <CustomTextField
           id="sku"
           label="SKU"
+          type="text"
           placeholder="Enter product SKU"
           v-model="form.sku"
           :error="errors.sku"
@@ -22,6 +26,7 @@
         <CustomTextField
           id="name"
           label="Name"
+          type="text"
           placeholder="Enter product name"
           v-model="form.name"
           :error="errors.name"
@@ -31,6 +36,7 @@
         <CustomTextField
           id="price"
           label="Price"
+          type="number"
           placeholder="Enter product price"
           v-model="form.price"
           :error="errors.price"
@@ -136,7 +142,8 @@ const errors = ref({
   width: false,
   height: false,
   length: false,
-  duplicate_sku_error: false
+  duplicate_sku_error: false,
+  type_error: false
 })
 
 const notify = () => {
@@ -144,17 +151,33 @@ const notify = () => {
     toast.error('This SKU already exists!', {
       position: toast.POSITION.TOP_CENTER
     })
-    errors.value.duplicate_sku_error = false // Reset after notification
+    errors.value.duplicate_sku_error = false
   }
 }
 
-// Watch for duplicate SKU error and trigger notification
+const typeErrorNotify = () => {
+  if (errors.value.type_error) {
+    toast.error('Please, provide the data of indicated type', {
+      position: toast.POSITION.TOP_CENTER
+    })
+  }
+  errors.value.type_error = false
+}
+
 watch(
   () => errors.value.duplicate_sku_error,
   (newVal) => {
     if (newVal) notify()
   }
 )
+
+watch(
+  () => errors.value.type_error,
+  (newVal) => {
+    if (newVal) typeErrorNotify()
+  }
+)
+
 const handleSave = async () => {
   if (!validatedForm(errors, form)) {
     return
@@ -164,10 +187,10 @@ const handleSave = async () => {
   )
 
   try {
-    const response = await axios.post('/create-product', filteredData)
-    await router.push({ name: 'ProductListPage' })
+    await axios.post('/create-product', filteredData)
+    router.push({ name: 'ProductListPage' })
   } catch (error) {
-    console.error('Error during save:', error)
+    console.error(error)
     const errorData = error.response?.data?.error
     if (errorData?.startsWith('SQLSTATE[23000]')) {
       errors.value.duplicate_sku_error = true
@@ -175,5 +198,4 @@ const handleSave = async () => {
     }
   }
 }
-
 </script>

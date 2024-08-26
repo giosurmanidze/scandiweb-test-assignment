@@ -106,7 +106,7 @@ And now you should provide **.env** file all the necessary environment variables
 You can run PHP built-in development server by executing:
 
 ```sh
-  php -S localhost:8000
+  php -S localhost:8080
 ```
 
 Start vite Development Server:

@@ -53,11 +53,7 @@ class Products
             $dbConn = Db::getConnection();
 
             Validator::validateArrayOfSkus($skus);
-
-            $placeholders = implode(',', array_fill(0, count($skus), '?'));
-            $sql = "DELETE FROM products WHERE sku IN ($placeholders)";
-            $stmt = $dbConn->prepare($sql);
-            $stmt->execute($skus);
+            ProductHelper::deleteProducts($dbConn, $skus);
 
             HttpResponse::deleted();
         } catch (\InvalidArgumentException $e) {

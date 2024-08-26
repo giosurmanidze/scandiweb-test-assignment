@@ -30,19 +30,27 @@ class ProductHelper
         return null;
     }
 
-    public static function insertProduct($dbConn, array $productData): void
+    public static function insertProduct(\PDO $dbConn, array $productData): void
     {
         $query = "INSERT INTO products (sku, name, price, type) VALUES (:sku, :name, :price, :type)";
         $stmt = $dbConn->prepare($query);
         $stmt->execute($productData);
     }
 
-    public static function insertIntoDynamicTable($dbConn, string $dbTable, array $filteredData): void
+    public static function insertIntoDynamicTable(\PDO $dbConn, string $dbTable, array $filteredData): void
     {
         $columns = implode(", ", array_keys($filteredData));
         $placeholders = implode(", ", array_map(fn($key) => ":$key", array_keys($filteredData)));
         $sql = "INSERT INTO $dbTable ($columns) VALUES ($placeholders)";
         $stmt = $dbConn->prepare($sql);
         $stmt->execute($filteredData);
+    }
+
+    public static function deleteProducts(\PDO $dbConn, array $skus): void
+    {
+        $placeholders = implode(',', array_fill(0, count($skus), '?'));
+        $sql = "DELETE FROM products WHERE sku IN ($placeholders)";
+        $stmt = $dbConn->prepare($sql);
+        $stmt->execute($skus);
     }
 }

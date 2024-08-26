@@ -48,16 +48,7 @@ trait ProductTrait
         try {
             $dbConn = Db::getConnection();
 
-            $sql = "SELECT p.sku, p.name, p.price, p.type, s.* 
-            FROM products AS p 
-            INNER JOIN $dbTable AS s ON p.sku = s.sku 
-            ORDER BY p.id";
-
-            $stmt = $dbConn->prepare($sql);
-            $stmt->execute();
-            $products = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-            return $products;
+            return ProductHelper::selectProducts($dbConn, $dbTable);
         } catch (\Exception $e) {
             HttpResponse::dbError($e->getMessage());
             return null;

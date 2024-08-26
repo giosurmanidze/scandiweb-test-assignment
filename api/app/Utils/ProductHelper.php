@@ -53,4 +53,18 @@ class ProductHelper
         $stmt = $dbConn->prepare($sql);
         $stmt->execute($skus);
     }
+
+    public static function selectProducts(\PDO $dbConn, string $dbTable): array
+    {
+        // Construct the SQL query
+        $sql = "SELECT p.sku, p.name, p.price, p.type, s.* 
+                FROM products AS p 
+                INNER JOIN $dbTable AS s ON p.sku = s.sku 
+                ORDER BY p.id";
+
+        // Prepare, execute, and fetch results
+        $stmt = $dbConn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

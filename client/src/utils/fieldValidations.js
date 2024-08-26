@@ -4,20 +4,19 @@ const validateForm = (errors, form) => {
 
     if (!form.value.sku) {
         errors.value.sku = true;
+        errors.value.type_error = true
         isValid = false;
     }
     if (!form.value.name) {
         errors.value.name = true;
-        isValid = false;
-    }
-    if (!form.value.price) {
-        errors.value.price = true;
-        isValid = false;
-    } else if (isNaN(Number(form.value.price))) {
-        errors.value.price = true;
         errors.value.type_error = true
         isValid = false;
     }
+    if (!form.value.price || isNaN(Number(form.value.price))) {
+        errors.value.price = true;
+        errors.value.type_error = true
+        isValid = false;
+    } 
 
     if (form.value.type === 'book' && (!form.value.weight || isNaN(Number(form.value.weight)))) {
         errors.value.weight = true;
